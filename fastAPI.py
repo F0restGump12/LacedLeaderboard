@@ -27,7 +27,6 @@ class ProductName(BaseModel):
 class UniqueSale(BaseModel):
     productName: str
     sku: str
-    LacedID: str
     price: int
     user: str
     dateDay: str
@@ -111,7 +110,6 @@ class Leaderboard:
         create_table_uniqueSales = """CREATE TABLE uniqueSales (
                     productName text,
                     sku text,
-                    lacedID integer,
                     price integer,
                     dateSold text,
                     userName text,
@@ -280,7 +278,6 @@ class Leaderboard:
     async def add_uniqueSale(self, uniqueSale: UniqueSale):
         productName = uniqueSale.productName
         sku = uniqueSale.sku
-        lacedID = uniqueSale.LacedID
         price = uniqueSale.price
         user = uniqueSale.user
         day = uniqueSale.dateDay
@@ -399,8 +396,8 @@ class Leaderboard:
         c = conn.cursor()
 
         # Inserting data
-        c.execute("INSERT INTO uniqueSales (productName, sku, lacedID, price, dateSold, userName, userID) VALUES (?, ?, ?, ?, ?, ?, ?)", (
-            productName, sku, lacedID, price, dateObj, user, primarykeyUserID))
+        c.execute("INSERT INTO uniqueSales (productName, sku, price, dateSold, userName, userID) VALUES (?, ?, ?, ?, ?, ?, ?)", (
+            productName, sku, price, dateObj, user, primarykeyUserID))
         
         conn.commit()
         conn.close()
