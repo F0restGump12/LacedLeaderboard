@@ -396,7 +396,7 @@ class Leaderboard:
         c = conn.cursor()
 
         # Inserting data
-        c.execute("INSERT INTO uniqueSales (productName, sku, price, dateSold, userName, userID) VALUES (?, ?, ?, ?, ?, ?, ?)", (
+        c.execute("INSERT INTO uniqueSales (productName, sku, price, dateSold, userName, userID) VALUES (?, ?, ?, ?, ?, ?)", (
             productName, sku, price, dateObj, user, primarykeyUserID))
         
         conn.commit()
