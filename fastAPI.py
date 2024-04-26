@@ -10,6 +10,7 @@ import datetime
 from fastapi_utils.cbv import cbv
 from fastapi_utils.inferring_router import InferringRouter
 import uvicorn
+import time
 
 class Item(BaseModel):
     name: str
@@ -173,7 +174,6 @@ class Leaderboard:
                 userSales[f'{userName}'] = {}
                 userSales[f'{userName}']['periodSales'] = 1
         
-        print(userSales)
         for user in userSales:
             if userSales[f'{user}']['periodSales'] >= highestSaleQty:
                 highestSaleQty = userSales[f'{user}']['periodSales']
@@ -421,7 +421,7 @@ class Leaderboard:
 
         # Searching if user exists
         userSearch = c.execute("""SELECT EXISTS(SELECT 1 FROM users WHERE userID=? LIMIT 1)""", (userName, )).fetchone()[0]
-
+        print(userSearch)
 
         if userSearch != 0:
 
@@ -441,7 +441,7 @@ class Leaderboard:
             results = c.fetchall()
 
             print(results)
-
+            time.sleep(3)
             # Create dictionary to store results
             userSales = {}
 
