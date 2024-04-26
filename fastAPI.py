@@ -161,7 +161,7 @@ class Leaderboard:
         highestSaleUser = ''
 
         for i in range(0, len(sqlResult)):
-            userName = sqlResult[i][5]
+            userName = sqlResult[i][4]
             print(userName)
 
             if userName in userSales:
