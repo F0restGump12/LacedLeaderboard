@@ -446,16 +446,20 @@ class Leaderboard:
             userSales = {}
 
             for result in range(0, 10):
-                userItem = results[result][0]
-                userSKU = results[result][1]
-                userPrice = results[result][2]
-                userDate = results[result][3]
+                try:
+                    userItem = results[result][0]
+                    userSKU = results[result][1]
+                    userPrice = results[result][2]
+                    userDate = results[result][3]
+    
+                    userSales[f'{result}'] = {}
+                    userSales[f'{result}']['Item Name'] = userItem
+                    userSales[f'{result}']['SKU'] = userSKU
+                    userSales[f'{result}']['Sale Price'] = userPrice
+                    userSales[f'{result}']['Date of Sale'] = userDate
 
-                userSales[f'{result}'] = {}
-                userSales[f'{result}']['Item Name'] = userItem
-                userSales[f'{result}']['SKU'] = userSKU
-                userSales[f'{result}']['Sale Price'] = userPrice
-                userSales[f'{result}']['Date of Sale'] = userDate
+                except:
+                    print('Not enough results')
 
             conn.close()
             return userSales
