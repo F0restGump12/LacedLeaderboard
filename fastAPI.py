@@ -443,6 +443,8 @@ class Leaderboard:
 
             results = c.fetchall()
 
+            print(results)
+
             # Create dictionary to store results
             userSales = {}
 
