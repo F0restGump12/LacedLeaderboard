@@ -161,7 +161,7 @@ class Leaderboard:
         highestSaleUser = ''
 
         for i in range(0, len(sqlResult)):
-            userName = sqlResult[i][4]
+            userName = sqlResult[i][5]
             print(userName)
 
             if userName in userSales:
@@ -430,10 +430,10 @@ class Leaderboard:
 
             # Finding rowid of user
             rowIDUser = c.execute("SELECT rowid FROM users WHERE userID=?", (userName, )).fetchone()[0]
-            print(rowIDUser)
+
             # JOIN uniqueSales and user together for the userName
 
-            c.execute("""   SELECT us.productName, us.sku, us.price, us.date
+            c.execute("""   SELECT us.productName, us.sku, us.price, us.dateSold
                     FROM 
                             uniqueSales AS us
                     INNER JOIN
@@ -446,7 +446,7 @@ class Leaderboard:
             # Create dictionary to store results
             userSales = {}
 
-            for result in range(0, len(results)):
+            for result in range(0, 10):
                 userItem = results[result][0]
                 userSKU = results[result][1]
                 userPrice = results[result][2]
@@ -461,13 +461,11 @@ class Leaderboard:
             conn.close()
             return userSales
 
-
-            
         else:
             conn.close()
             return 'User does not exist'
 
-    @router.post("/checksku")
+    @router.post("/checksku/")
     async def checkSales(self, checkSKU: CheckSKU):
         sku = checkSKU.sku
 
@@ -480,10 +478,10 @@ class Leaderboard:
         c = conn.cursor()
 
         results = c.execute("SELECT * FROM uniqueSales WHERE SKU=?", (sku, )).fetchall()
-
-        return results
+        
+        return results[:10]
     
-    @router.get("/topsellers")
+    @router.get("/topsellers/")
     async def topsellers(self):
 
         dateNow = self.dateNow()
@@ -523,7 +521,6 @@ class Leaderboard:
         topsellers['Top Seller 30 Days']['Username'] = delta30UserName
         topsellers['Top Seller 30 Days']['Sales Qty'] = delta30Qty
 
-        print(topsellers)
         return topsellers
 
     @router.get("/latestsales/")
