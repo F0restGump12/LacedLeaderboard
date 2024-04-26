@@ -155,18 +155,15 @@ class Leaderboard:
     
     def highestSeller(self, sqlResult):
         
-        print(sqlResult)
         userSales = {}
         highestSaleQty = 0
         highestSaleUser = ''
 
         for i in range(0, len(sqlResult)):
             userName = sqlResult[i][4]
-            print(userName)
 
             if userName in userSales:
                 
-                print('True')
                 sales = userSales[f'{userName}']['periodSales']
                 sales += 1
                 userSales[f'{userName}']['periodSales'] = sales
